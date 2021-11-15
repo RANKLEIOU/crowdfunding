@@ -22,6 +22,5 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public void saveAdmin(Admin admin) {
 		adminMapper.insert(admin);
-		throw new RuntimeException();
 	}
 }
