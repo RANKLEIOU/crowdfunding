@@ -8,5 +8,5 @@ public interface AdminService {
 
 	List<Admin> findAll();
 
-	int saveAdmin(Admin admin);
+	void saveAdmin(Admin admin);
 }

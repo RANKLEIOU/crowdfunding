@@ -47,8 +47,8 @@
 	<!--配置AOP-->
 	<aop:config>
 		<!--配置切入点表达式-->
-		<aop:pointcut id="pointCut" expression="execution(* *..*ServiceImpl.*(..))"/>
+		<aop:pointcut id="myPointCut" expression="execution(* *..*.*ServiceImpl.*(..))"/>
 		<!--将事务通知和切入点表达式连接到一起-->
-		<aop:advisor advice-ref="txAdvice" pointcut-ref="pointCut"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="myPointCut"/>
 	</aop:config>
 </beans>

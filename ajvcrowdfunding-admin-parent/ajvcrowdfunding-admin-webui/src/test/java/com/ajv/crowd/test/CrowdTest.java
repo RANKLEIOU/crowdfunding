@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring-persist-mybatis.xml","classpath:spring-persist-tx.xml"})
+@ContextConfiguration(locations = {"classpath:spring-persist-mybatis.xml", "classpath:spring-persist-tx.xml"})
 public class CrowdTest {
 
 	@Autowired
@@ -36,22 +36,17 @@ public class CrowdTest {
 
 	//测试mapper是否生效
 	@Test
-	public void mapperTest(){
+	public void mapperTest() {
 		List<Admin> admins = adminMapper.selectByExample(null);
-		for (Admin admin : admins){
+		for (Admin admin : admins) {
 			System.out.println(admin);
 		}
 	}
 
 	//测试业务层方法以及配置的事务是否生效
 	@Test
-	public void serviceTest(){
-		//List<Admin> info = adminService.findAll();
-		//for (Admin admin : info){
-		//	System.out.println(admin);
-		//}
-		Admin admin = new Admin(null, "account", "123456", "zs", "zs@rankle.com", "2021-11-14");
+	public void serviceTest() {
+		Admin admin = new Admin(null, "account", "123456", "zs", "zs@rankle.com", "2021-11-15");
 		adminService.saveAdmin(admin);
-		throw new RuntimeException();
 	}
 }

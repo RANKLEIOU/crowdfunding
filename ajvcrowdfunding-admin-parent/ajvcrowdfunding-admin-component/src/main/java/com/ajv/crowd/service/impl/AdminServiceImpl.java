@@ -20,7 +20,8 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public int saveAdmin(Admin admin) {
-		return adminMapper.insert(admin);
+	public void saveAdmin(Admin admin) {
+		adminMapper.insert(admin);
+		throw new RuntimeException();
 	}
 }
