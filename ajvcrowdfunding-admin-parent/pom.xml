@@ -28,6 +28,12 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<!--lombok工具插件-->
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>1.18.22</version>
+			</dependency>
 			<!-- Spring 依赖 -->
 			<!-- https://mvnrepository.com/artifact/org.springframework/spring-orm -->
 			<dependency>
