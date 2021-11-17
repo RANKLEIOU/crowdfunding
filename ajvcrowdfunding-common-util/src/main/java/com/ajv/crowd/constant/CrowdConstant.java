@@ -1,4 +1,4 @@
-package com.ajv.crowd.util;
+package com.ajv.crowd.constant;
 
 public class CrowdConstant {
 

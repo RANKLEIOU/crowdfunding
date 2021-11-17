@@ -1,5 +1,7 @@
 package com.ajv.crowd.util;
 
+import com.ajv.crowd.constant.CrowdConstant;
+
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
 import java.security.MessageDigest;
