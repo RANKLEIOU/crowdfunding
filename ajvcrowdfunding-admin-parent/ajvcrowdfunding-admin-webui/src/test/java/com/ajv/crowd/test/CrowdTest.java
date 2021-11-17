@@ -3,6 +3,7 @@ package com.ajv.crowd.test;
 import com.ajv.crowd.entity.Admin;
 import com.ajv.crowd.mapper.AdminMapper;
 import com.ajv.crowd.service.api.AdminService;
+import com.ajv.crowd.util.CrowdUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +49,13 @@ public class CrowdTest {
 	public void serviceTest() {
 		Admin admin = new Admin(null, "account", "123456", "zs", "zs@rankle.com", "2021-11-15");
 		adminService.saveAdmin(admin);
+	}
+
+	// 测试MD5加密算法
+	@Test
+	public void md5Test(){
+		String encode = "123456";
+		String encoded = CrowdUtil.md5(encode);
+		System.out.println(encoded);
 	}
 }
