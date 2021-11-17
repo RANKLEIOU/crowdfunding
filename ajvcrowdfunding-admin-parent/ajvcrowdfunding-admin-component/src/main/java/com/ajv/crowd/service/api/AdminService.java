@@ -9,4 +9,6 @@ public interface AdminService {
 	List<Admin> findAll();
 
 	void saveAdmin(Admin admin);
+
+	Admin getAdminByLoginAcct(String loginAcct, String userPswd);
 }
