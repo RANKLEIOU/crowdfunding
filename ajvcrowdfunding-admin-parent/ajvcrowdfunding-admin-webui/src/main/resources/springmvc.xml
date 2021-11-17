@@ -27,7 +27,7 @@
 	<!--<mvc:resources mapping="/jquery/**" location="/jquery/"/>-->
 
 	<!--配置访问路径和视图页面的绑定-->
-	<mvc:view-controller path="/admin/to/login/toLogin" view-name="admin-login"/>
+	<mvc:view-controller path="admin/to/login/toLogin" view-name="admin-login"/>
 
 	<!--配置基于XML的异常映射-->
 	<bean id="simpleMappingExceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">

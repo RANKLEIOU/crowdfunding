@@ -32,7 +32,7 @@ public class AdminServiceImpl implements AdminService {
 		if (admins == null && admins.size() == 0){
 			throw new RuntimeException(CrowdConstant.MESSAGE_LOGIN_FAILED);
 		}
-		if (admins.size() > 0){
+		if (admins.size() > 1){
 			throw new RuntimeException(CrowdConstant.MESSAGE_SYSTEM_ERROR_LOGIN_NOT_UNIQUE);
 		}
 
