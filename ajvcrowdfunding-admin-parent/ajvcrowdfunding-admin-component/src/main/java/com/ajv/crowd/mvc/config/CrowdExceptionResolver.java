@@ -1,6 +1,7 @@
 package com.ajv.crowd.mvc.config;
 
-import com.ajv.crowd.util.CrowdConstant;
+import com.ajv.crowd.constant.CrowdConstant;
+import com.ajv.crowd.exception.LoginFailedException;
 import com.ajv.crowd.util.CrowdUtil;
 import com.ajv.crowd.util.ResultEntity;
 import com.google.gson.Gson;
@@ -16,14 +17,14 @@ import java.io.IOException;
 @ControllerAdvice
 public class CrowdExceptionResolver {
 
-	@ExceptionHandler(value = ArithmeticException.class)
-	public ModelAndView resolveMathException(
-			ArithmeticException exception,
+	@ExceptionHandler(value = LoginFailedException.class)
+	public ModelAndView resolveLoginFailedException(
+			LoginFailedException exception,
 			HttpServletRequest request,
 			HttpServletResponse response
 	) throws IOException {
 
-		String viewName = "system-error";
+		String viewName = "admin-login";
 
 		return commonResolve(viewName, exception, request, response);
 	}
