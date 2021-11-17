@@ -23,4 +23,17 @@
 	<!--将静态资源交给默认的servlet容器处理-->
 	<mvc:default-servlet-handler/>
 
+	<mvc:resources mapping="/jquery/**" location="/jquery/"/>
+
+	<!--配置基于XML的异常映射-->
+	<bean id="simpleMappingExceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<!--配置异常类型和视图页面的对应关系-->
+		<property name="exceptionMappings">
+			<props>
+				<!--key属性指定异常全类名，标签中写对应的视图名，自动调用视图解析器来获取完整路径-->
+				<prop key="java.lang.Exception">system-error</prop>
+			</props>
+		</property>
+	</bean>
+
 </beans>
