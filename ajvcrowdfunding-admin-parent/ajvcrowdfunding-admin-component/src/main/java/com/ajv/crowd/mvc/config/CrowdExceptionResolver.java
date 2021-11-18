@@ -1,6 +1,7 @@
 package com.ajv.crowd.mvc.config;
 
 import com.ajv.crowd.constant.CrowdConstant;
+import com.ajv.crowd.exception.AccessForbiddenException;
 import com.ajv.crowd.exception.LoginFailedException;
 import com.ajv.crowd.util.CrowdUtil;
 import com.ajv.crowd.util.ResultEntity;
@@ -29,9 +30,9 @@ public class CrowdExceptionResolver {
 		return commonResolve(viewName, exception, request, response);
 	}
 
-	@ExceptionHandler(value = NullPointerException.class)
-	public ModelAndView resolveNullPointerException(
-			NullPointerException exception,
+	@ExceptionHandler(value = AccessForbiddenException.class)
+	public ModelAndView resolveAccessForbiddenException(
+			AccessForbiddenException exception,
 			HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 
