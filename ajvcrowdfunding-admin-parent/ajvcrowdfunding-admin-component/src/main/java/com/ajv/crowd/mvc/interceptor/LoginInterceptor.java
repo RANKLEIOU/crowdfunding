@@ -25,7 +25,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 			// 4.如果为空表示未登录，则抛出验证异常
 			throw new AccessForbiddenException(CrowdConstant.MESSAGE_ACCESS_FORBIDEN);
 		}
-
+		// 5.存有用户信息则放行
 		return true;
 	}
 }
