@@ -19,18 +19,19 @@
 
 	function initPagination() {
 		//获取总页数
-		var total = ${requestScope.pageInfo.total}
+		var total =
+		${requestScope.pageInfo.total}
 		//配置分页属性
 		var properties = {
-				num_edge_entries: 3,                               //边缘页数
-				num_display_entries: 5,                            //主体页数
-				items_per_page:${requestScope.pageInfo.pageSize},  //每页显示的数据量
-				current_page:${requestScope.pageInfo.pageNum-1},   //当前页
-				prev_text: "上一页",
-				next_text: "下一页",
-				callback: pageSelectCallback,
+			num_edge_entries: 3,                               //边缘页数
+			num_display_entries: 5,                            //主体页数
+			items_per_page:${requestScope.pageInfo.pageSize},  //每页显示的数据量
+			current_page:${requestScope.pageInfo.pageNum-1},   //当前页
+			prev_text: "上一页",
+			next_text: "下一页",
+			callback: pageSelectCallback,
 		}
-		$("#Pagination").pagination(total,properties)
+		$("#Pagination").pagination(total, properties)
 	}
 
 	/**
