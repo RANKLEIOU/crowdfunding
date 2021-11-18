@@ -40,12 +40,10 @@
 	 * @param jQuery jQuery对象
 	 */
 	function pageSelectCallback(pageIndex, jQuery) {
-		console.log("这里进来了")
 		//通过计算得到当前页码
 		var pageNum = pageIndex + 1;
 		//跳转页面
 		window.location.href = "admin/get/page?pageNum=" + pageNum + "&keyword=${param.keyword}";
-		console.info("这里以及提交了表单")
 		//超链接默认会跳转页面，返回false取消默认行为
 		return false;
 	}
