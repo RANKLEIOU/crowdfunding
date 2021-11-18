@@ -45,7 +45,10 @@ public class AdminController {
 	}
 
 	@RequestMapping("/admin/get/page")
-	public String toPage(@RequestParam(value = "keyword",defaultValue = "")String keyword, @RequestParam(value = "pageNum",defaultValue = "1")Integer pageNum, @RequestParam(value = "pageSize",defaultValue = "5")Integer pageSize, Model model){
+	public String toPage(@RequestParam(value = "keyword",defaultValue = "")String keyword,
+						 @RequestParam(value = "pageNum",defaultValue = "1")Integer pageNum,
+						 @RequestParam(value = "pageSize",defaultValue = "5")Integer pageSize,
+						 Model model){
 		PageInfo<Admin> pageInfo = adminService.selectAdminBykeyword(keyword, pageNum, pageSize);
 		model.addAttribute(CrowdConstant.ATTR_NAME_PAGE_INFO, pageInfo);
 		return "admin-page";
