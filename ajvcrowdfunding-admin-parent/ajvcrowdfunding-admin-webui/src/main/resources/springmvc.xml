@@ -12,7 +12,6 @@
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<!-- 前缀：附加到逻辑视图名称前 -->
 		<property name="prefix" value="/WEB-INF/"/>
-
 		<!-- 后缀：附加到逻辑视图名称后 -->
 		<property name="suffix" value=".jsp"/>
 	</bean>
@@ -40,5 +39,19 @@
 			</props>
 		</property>
 	</bean>
+
+	<!--注册拦截器-->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<!--拦截多层路径-->
+			<mvc:mapping path="/**"/>
+			<!--需要放行的路径-->
+			<mvc:exclude-mapping path="admin/to/login/toLogin"/>
+			<mvc:exclude-mapping path="admin/do/login"/>
+			<mvc:exclude-mapping path="admin/do/logout"/>
+			<!--需要注册的拦截器-->
+			<bean class="com.ajv.crowd.mvc.interceptor.LoginInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
 
 </beans>
