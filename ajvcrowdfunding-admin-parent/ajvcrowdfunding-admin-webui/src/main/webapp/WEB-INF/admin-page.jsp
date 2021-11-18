@@ -19,17 +19,18 @@
 
 	function initPagination() {
 		//获取总页数
-		var total = ${requestScope.pageInfo.pages}
-			//创建分页
-			$("#Pagination").pagination(total, {
+		var total = ${requestScope.pageInfo.total}
+		//配置分页属性
+		var properties = {
 				num_edge_entries: 3,                               //边缘页数
 				num_display_entries: 5,                            //主体页数
-				callback: pageSelectCallback,                      //翻页的回调函数
-				current_page:${requestScope.pageInfo.pageNum-1},  //当前页
+				items_per_page:${requestScope.pageInfo.pageSize},  //每页显示的数据量
+				current_page:${requestScope.pageInfo.pageNum-1},   //当前页
 				prev_text: "上一页",
 				next_text: "下一页",
-				items_per_page:${requestScope.pageInfo.pageSize}  //每页显示的数据量
-			})
+				callback: pageSelectCallback,
+		}
+		$("#Pagination").pagination(total,properties)
 	}
 
 	/**
@@ -38,10 +39,12 @@
 	 * @param jQuery jQuery对象
 	 */
 	function pageSelectCallback(pageIndex, jQuery) {
+		console.log("这里进来了")
 		//通过计算得到当前页码
 		var pageNum = pageIndex + 1;
 		//跳转页面
-		window.location.href = "admin/get/page?pageNum=" + pageNum
+		window.location.href = "admin/get/page?pageNum=" + pageNum + "&keyword=${param.keyword}";
+		console.info("这里以及提交了表单")
 		//超链接默认会跳转页面，返回false取消默认行为
 		return false;
 	}
@@ -60,15 +63,15 @@
 					</h3>
 				</div>
 				<div class="panel-body">
-					<form class="form-inline" role="form" style="float: left;">
+					<form action="admin/get/page" method="post" class="form-inline" role="form" style="float: left;">
 						<div class="form-group has-feedback">
 							<div class="input-group">
 								<div class="input-group-addon">查询条件</div>
-								<input class="form-control has-success" type="text"
+								<input name="keyword" class="form-control has-success" type="text"
 									   placeholder="请输入查询条件">
 							</div>
 						</div>
-						<button type="button" class="btn btn-warning">
+						<button type="submit" class="btn btn-warning">
 							<i class="glyphicon glyphicon-search"></i> 查询
 						</button>
 					</form>
