@@ -26,7 +26,7 @@
 	<!--<mvc:resources mapping="/jquery/**" location="/jquery/"/>-->
 
 	<!--配置访问路径和视图页面的绑定-->
-	<mvc:view-controller path="admin/to/login/toLogin" view-name="admin-login"/>
+	<mvc:view-controller path="/admin/to/login/toLogin" view-name="admin-login"/>
 	<mvc:view-controller path="/admin/to/main/toMain" view-name="admin-main"/>
 
 	<!--配置基于XML的异常映射-->
@@ -50,6 +50,8 @@
 			<mvc:exclude-mapping path="/admin/to/login/toLogin"/>
 			<mvc:exclude-mapping path="/admin/do/login"/>
 			<mvc:exclude-mapping path="/admin/do/logout"/>
+			<!--放行static包下所有的资源-->
+			<mvc:exclude-mapping path="/static/**"/>
 			<!--需要注册的拦截器-->
 			<bean class="com.ajv.crowd.mvc.interceptor.LoginInterceptor"/>
 		</mvc:interceptor>
