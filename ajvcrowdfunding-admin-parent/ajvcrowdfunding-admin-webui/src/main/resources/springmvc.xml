@@ -36,6 +36,7 @@
 			<props>
 				<!--key属性指定异常全类名，标签中写对应的视图名，自动调用视图解析器来获取完整路径-->
 				<prop key="java.lang.Exception">system-error</prop>
+				<prop key="com.ajv.crowd.exception.AccessForbiddenException">admin-login</prop>
 			</props>
 		</property>
 	</bean>
@@ -46,9 +47,9 @@
 			<!--拦截多层路径-->
 			<mvc:mapping path="/**"/>
 			<!--需要放行的路径-->
-			<mvc:exclude-mapping path="admin/to/login/toLogin"/>
-			<mvc:exclude-mapping path="admin/do/login"/>
-			<mvc:exclude-mapping path="admin/do/logout"/>
+			<mvc:exclude-mapping path="/admin/to/login/toLogin"/>
+			<mvc:exclude-mapping path="/admin/do/login"/>
+			<mvc:exclude-mapping path="/admin/do/logout"/>
 			<!--需要注册的拦截器-->
 			<bean class="com.ajv.crowd.mvc.interceptor.LoginInterceptor"/>
 		</mvc:interceptor>
