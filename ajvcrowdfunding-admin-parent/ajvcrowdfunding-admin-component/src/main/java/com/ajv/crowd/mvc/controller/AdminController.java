@@ -3,8 +3,10 @@ package com.ajv.crowd.mvc.controller;
 import com.ajv.crowd.constant.CrowdConstant;
 import com.ajv.crowd.entity.Admin;
 import com.ajv.crowd.service.api.AdminService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -40,5 +42,12 @@ public class AdminController {
 		// 强制session域对象失效
 		session.invalidate();
 		return "redirect:/admin/to/login/toLogin";
+	}
+
+	@RequestMapping("/admin/get/page")
+	public String toPage(@RequestParam(value = "keyword",defaultValue = "")String keyword, @RequestParam(value = "pageNum",defaultValue = "1")Integer pageNum, @RequestParam(value = "pageSize",defaultValue = "5")Integer pageSize, Model model){
+		PageInfo<Admin> pageInfo = adminService.selectAdminBykeyword(keyword, pageNum, pageSize);
+		model.addAttribute(CrowdConstant.ATTR_NAME_PAGE_INFO, pageInfo);
+		return "admin-page";
 	}
 }

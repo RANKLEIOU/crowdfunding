@@ -6,6 +6,8 @@ import com.ajv.crowd.entity.AdminExample;
 import com.ajv.crowd.mapper.AdminMapper;
 import com.ajv.crowd.service.api.AdminService;
 import com.ajv.crowd.util.CrowdUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +53,17 @@ public class AdminServiceImpl implements AdminService {
 			throw new RuntimeException(CrowdConstant.MESSAGE_LOGIN_FAILED);
 		}
 		return admin;
+	}
+
+	@Override
+	public PageInfo<Admin> selectAdminBykeyword(String keyword, Integer pageNum, Integer pageSize) {
+		// 调用pageHelper静态方法开启分页
+		PageHelper.startPage(pageNum,pageSize);
+		// 执行查询获取数据
+		List<Admin> admins = adminMapper.selectAdminBykeyword(keyword);
+		// 将获取的数据封装到pageInfo中
+		PageInfo<Admin> pageInfo = new PageInfo<>(admins);
+		return pageInfo;
 	}
 
 	@Override
