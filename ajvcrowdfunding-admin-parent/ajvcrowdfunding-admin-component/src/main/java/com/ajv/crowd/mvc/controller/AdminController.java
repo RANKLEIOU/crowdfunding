@@ -62,10 +62,47 @@ public class AdminController {
 		return "admin-page";
 	}
 
+	// 添加管理员
 	@RequestMapping("/admin/save")
 	public String saveAdmin(Admin admin){
 		adminService.saveAdmin(admin);
 		//重定向到分页页面
 		return "redirect:/admin/get/page?pageNum="+Integer.MAX_VALUE;
+	}
+
+	//删除管理员
+	@RequestMapping("/admin/remove")
+	public String removeAdmin(@RequestParam("id")Integer id,
+							  @RequestParam("pageNum")Integer pageNum,
+							  @RequestParam("keyword")String keyword){
+
+		adminService.removeAdmin(id);
+
+		return "redirect:/admin/get/page?pageNum="+pageNum+"&keyword="+keyword;
+	}
+
+	//跳转管理员信息
+	@RequestMapping("/admin/to/edit/page")
+	public String findById(@RequestParam Integer id,Model model){
+		Admin admin = adminService.findById(id);
+		model.addAttribute("admin",admin);
+		return "admin-edit";
+	}
+
+	/**
+	 * 修改管理员信息
+	 * @param keyword 前端传入的查询关键字
+	 * @param pageNum 当前页面
+	 * @param admin 从请求中获取提交的数据
+	 * @return 重定向到信息页面
+	 */
+	@RequestMapping("/admin/edit")
+	public String updateAdmin(@RequestParam("keyword")String keyword,
+							  @RequestParam("pageNum")Integer pageNum,
+							  Admin admin){
+
+		adminService.updateAdmin(admin);
+
+		return "redirect:/admin/get/page?pageNum="+pageNum+"&keyword="+keyword;
 	}
 }

@@ -98,4 +98,27 @@ public class AdminServiceImpl implements AdminService {
 			throw e;
 		}
 	}
+
+	@Override
+	public void removeAdmin(Integer id) {
+		adminMapper.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public Admin findById(Integer id) {
+		return adminMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public void updateAdmin(Admin admin) {
+		try {
+			adminMapper.updateByPrimaryKeySelective(admin);
+		}catch (Exception e){
+			e.printStackTrace();
+			if (e instanceof DuplicateKeyException){
+				throw new LoginAcctAlreadyInUseException(CrowdConstant.MESSAGE_LOGIN_ACCT_ALREADY_IN_USE);
+			}
+		}
+	}
+
 }

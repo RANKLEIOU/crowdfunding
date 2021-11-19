@@ -11,4 +11,10 @@ public interface AdminService {
 
 	void saveAdmin(Admin admin);
 
+	void removeAdmin(Integer id);
+
+	Admin findById(Integer id);
+
+	void updateAdmin(Admin admin);
+
 }

@@ -113,12 +113,12 @@
 											<button type="button" class="btn btn-success btn-xs">
 												<i class=" glyphicon glyphicon-check"></i>
 											</button>
-											<button type="button" class="btn btn-primary btn-xs">
+											<a href="admin/to/edit/page?id=${admin.id}&pageNum=${requestScope.pageInfo.pageNum}&keyword=${param.keyword}" class="btn btn-primary btn-xs">
 												<i class=" glyphicon glyphicon-pencil"></i>
-											</button>
-											<button type="button" class="btn btn-danger btn-xs">
+											</a>
+											<a href="admin/remove?id=${admin.id}&pageNum=${requestScope.pageInfo.pageNum}&keyword=${param.keyword}" class="btn btn-danger btn-xs">
 												<i class=" glyphicon glyphicon-remove"></i>
-											</button>
+											</a>
 										</td>
 									</tr>
 								</c:forEach>
