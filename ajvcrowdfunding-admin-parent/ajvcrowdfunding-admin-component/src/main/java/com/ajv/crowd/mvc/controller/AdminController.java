@@ -44,6 +44,14 @@ public class AdminController {
 		return "redirect:/admin/to/login/toLogin";
 	}
 
+	/**
+	 * 条件查询
+	 * @param keyword 前端传入的查询关键字
+	 * @param pageNum 当前页面
+	 * @param pageSize 页面显示的数据量
+	 * @param model 将分页查询信息存到请求域中
+	 * @return 跳转到管理员信息页面
+	 */
 	@RequestMapping("/admin/get/page")
 	public String toPage(@RequestParam(value = "keyword",defaultValue = "")String keyword,
 						 @RequestParam(value = "pageNum",defaultValue = "1")Integer pageNum,
@@ -52,5 +60,12 @@ public class AdminController {
 		PageInfo<Admin> pageInfo = adminService.selectAdminBykeyword(keyword, pageNum, pageSize);
 		model.addAttribute(CrowdConstant.ATTR_NAME_PAGE_INFO, pageInfo);
 		return "admin-page";
+	}
+
+	@RequestMapping("/admin/save")
+	public String saveAdmin(Admin admin){
+		adminService.saveAdmin(admin);
+		//重定向到分页页面
+		return "redirect:/admin/get/page?pageNum="+Integer.MAX_VALUE;
 	}
 }

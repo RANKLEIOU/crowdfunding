@@ -3,14 +3,18 @@ package com.ajv.crowd.service.impl;
 import com.ajv.crowd.constant.CrowdConstant;
 import com.ajv.crowd.entity.Admin;
 import com.ajv.crowd.entity.AdminExample;
+import com.ajv.crowd.exception.LoginAcctAlreadyInUseException;
 import com.ajv.crowd.mapper.AdminMapper;
 import com.ajv.crowd.service.api.AdminService;
 import com.ajv.crowd.util.CrowdUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -67,12 +71,31 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<Admin> findAll() {
-		return adminMapper.selectByExample(null);
-	}
-
-	@Override
 	public void saveAdmin(Admin admin) {
-		adminMapper.insert(admin);
+		// 获取日期
+		Date date = new Date();
+		// 格式化工具并设置格式
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		// 格式化日期
+		String createTime = format.format(date);
+		// 设置为创建时间
+		admin.setCreateTime(createTime);
+
+		//对密码进行加密
+		String source = admin.getUserPswd();
+		String userPswd = CrowdUtil.md5(source);
+		admin.setUserPswd(userPswd);
+		//执行添加操作
+		try {
+			adminMapper.insert(admin);
+		}catch (Exception e){
+			e.printStackTrace();
+			//判断异常对象是否是DuplicateKeyException，判断正确则表示账号重复，抛出自定义异常
+			if (e instanceof DuplicateKeyException){
+				throw new LoginAcctAlreadyInUseException(CrowdConstant.MESSAGE_LOGIN_ACCT_ALREADY_IN_USE);
+			}
+			//如果不是DuplicateKeyException异常，则把异常对象再次抛出
+			throw e;
+		}
 	}
 }
