@@ -2,6 +2,7 @@ package com.ajv.crowd.mvc.config;
 
 import com.ajv.crowd.constant.CrowdConstant;
 import com.ajv.crowd.exception.AccessForbiddenException;
+import com.ajv.crowd.exception.LoginAcctAlreadyInUseException;
 import com.ajv.crowd.exception.LoginFailedException;
 import com.ajv.crowd.util.CrowdUtil;
 import com.ajv.crowd.util.ResultEntity;
@@ -22,8 +23,7 @@ public class CrowdExceptionResolver {
 	public ModelAndView resolveLoginFailedException(
 			LoginFailedException exception,
 			HttpServletRequest request,
-			HttpServletResponse response
-	) throws IOException {
+			HttpServletResponse response) throws IOException {
 
 		String viewName = "admin-login";
 
@@ -39,6 +39,17 @@ public class CrowdExceptionResolver {
 		String viewName = "system-error";
 
 		return commonResolve(viewName, exception, request, response);
+	}
+
+	@ExceptionHandler(value = LoginAcctAlreadyInUseException.class)
+	public ModelAndView resolveLoginAcctAlreadyInUseException(
+			LoginAcctAlreadyInUseException exception,
+			HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+
+		String viewName = "admin-add";
+
+		return commonResolve(viewName,exception,request,response);
 	}
 
 
