@@ -5,13 +5,10 @@
   Time: 20:19
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
-	<title>Title</title>
-	<base href="http://${pageContext.request.serverName }:${pageContext.request.serverPort }${pageContext.request.contextPath }/"/>
-	<script src="static/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
-	<script src="static/layer/layer.js" type="text/javascript"></script>
+	<%@include file="/WEB-INF/include-head.jsp"%>
 	<script type="text/javascript">
 		$(function(){
 			$("#btn").click(function (){
@@ -36,5 +33,6 @@
 	<a href="index">SSM整合测试</a>
 	<button id="btn">Ajax请求</button>
 	<button id="btn1">layer弹框</button>
+	<a href="admin/to/login/toLogin" class="btn btn-primary">管理员登录</a>
 </body>
 </html>
