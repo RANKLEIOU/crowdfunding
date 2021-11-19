@@ -3,9 +3,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <%@include file="/WEB-INF/include-head.jsp" %>
-
 <body>
-
 <%@ include file="/WEB-INF/include-nav.jsp" %>
 <div class="container-fluid">
 	<div class="row">
@@ -26,7 +24,8 @@
 						<p style="color: #db5860">${requestScope.exception.message}</p>
 						<div class="form-group">
 							<label for="loginAcct">登陆账号</label>
-							<input type="text" name="loginAcct" class="form-control" id="loginAcct" placeholder="请输入登陆账号">
+							<input type="text" name="loginAcct" class="form-control" id="loginAcct"
+								   placeholder="请输入登陆账号">
 						</div>
 						<div class="form-group">
 							<label for="userPswd">登陆密码</label>

@@ -104,17 +104,21 @@ public class AdminServiceImpl implements AdminService {
 		adminMapper.deleteByPrimaryKey(id);
 	}
 
+	//通过id查找个人信息显示在修改界面
 	@Override
 	public Admin findById(Integer id) {
 		return adminMapper.selectByPrimaryKey(id);
 	}
 
+	//修改方法
 	@Override
 	public void updateAdmin(Admin admin) {
 		try {
+			//动态的修改，不会修改传入值为空的字段
 			adminMapper.updateByPrimaryKeySelective(admin);
 		}catch (Exception e){
 			e.printStackTrace();
+			//如果修改的账号在数据库中有了则抛出异常
 			if (e instanceof DuplicateKeyException){
 				throw new LoginAcctAlreadyInUseException(CrowdConstant.MESSAGE_LOGIN_ACCT_ALREADY_IN_USE);
 			}
