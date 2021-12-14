@@ -59,7 +59,7 @@ public class AdminController {
 						 Model model){
 		PageInfo<Admin> pageInfo = adminService.selectAdminBykeyword(keyword, pageNum, pageSize);
 		model.addAttribute(CrowdConstant.ATTR_NAME_PAGE_INFO, pageInfo);
-		return "admin-page";
+		return "admin/admin-page";
 	}
 
 	// 添加管理员
@@ -86,7 +86,7 @@ public class AdminController {
 	public String findById(@RequestParam Integer id,Model model){
 		Admin admin = adminService.findById(id);
 		model.addAttribute("admin",admin);
-		return "admin-edit";
+		return "admin/admin-edit";
 	}
 
 	/**

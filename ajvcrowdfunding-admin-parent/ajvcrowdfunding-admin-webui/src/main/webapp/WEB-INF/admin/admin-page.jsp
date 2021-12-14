@@ -8,7 +8,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
-<%@include file="/WEB-INF/include-head.jsp" %>
+<%@include file="/WEB-INF/include/include-head.jsp" %>
 <link rel="stylesheet" href="static/css/pagination.css">
 <script src="static/jquery/jquery.pagination.js"></script>
 <script type="text/javascript">
@@ -49,10 +49,10 @@
 	}
 </script>
 <body>
-<%@include file="/WEB-INF/include-nav.jsp" %>
+<%@include file="/WEB-INF/include/include-nav.jsp" %>
 <div class="container-fluid">
 	<div class="row">
-		<%@include file="/WEB-INF/include-sidebar.jsp" %>
+		<%@include file="/WEB-INF/include/include-sidebar.jsp" %>
 
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<div class="panel panel-default">

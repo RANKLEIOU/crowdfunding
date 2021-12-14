@@ -21,12 +21,12 @@ public class RoleController {
 	@RequestMapping("/role/get/page")
 	@ResponseBody
 	public ResultEntity<PageInfo> rolePageInfo(@RequestParam(value = "keyword", defaultValue = "") String keyword,
-									 @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-									 @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
-									 Model model) {
+											   @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+											   @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+											   Model model) {
 
 		PageInfo<Role> pageInfo = roleService.getRoleByKeyword(keyword, pageNum, pageSize);
-		model.addAttribute(CrowdConstant.ATTR_NAME_PAGE_INFO,pageInfo);
+		model.addAttribute(CrowdConstant.ATTR_NAME_PAGE_INFO, pageInfo);
 		return ResultEntity.successWithData(pageInfo);
 	}
 }

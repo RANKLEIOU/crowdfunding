@@ -26,10 +26,10 @@
 	<!--<mvc:resources mapping="/jquery/**" location="/jquery/"/>-->
 
 	<!--配置访问路径和视图页面的绑定-->
-	<mvc:view-controller path="/admin/to/login/toLogin" view-name="admin-login"/>
-	<mvc:view-controller path="/admin/to/main/toMain" view-name="admin-main"/>
-	<mvc:view-controller path="/admin/to/add/page" view-name="admin-add"/>
-	<mvc:view-controller path="/role/to/page" view-name="role-page"/>
+	<mvc:view-controller path="/admin/to/login/toLogin" view-name="admin/admin-login"/>
+	<mvc:view-controller path="/admin/to/main/toMain" view-name="admin/admin-main"/>
+	<mvc:view-controller path="/admin/to/add/page" view-name="admin/admin-add"/>
+	<mvc:view-controller path="/role/to/page" view-name="role/role-page"/>
 
 	<!--配置基于XML的异常映射-->
 	<bean id="simpleMappingExceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
@@ -38,7 +38,7 @@
 			<props>
 				<!--key属性指定异常全类名，标签中写对应的视图名，自动调用视图解析器来获取完整路径-->
 				<prop key="java.lang.Exception">system-error</prop>
-				<prop key="com.ajv.crowd.exception.AccessForbiddenException">admin-login</prop>
+				<prop key="com.ajv.crowd.exception.AccessForbiddenException">admin/admin-login</prop>
 			</props>
 		</property>
 	</bean>

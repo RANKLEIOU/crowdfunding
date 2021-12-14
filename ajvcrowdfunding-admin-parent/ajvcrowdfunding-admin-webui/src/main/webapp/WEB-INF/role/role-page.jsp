@@ -7,7 +7,7 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
-<%@include file="include-head.jsp" %>
+<%@include file="../include/include-head.jsp" %>
 <link rel="stylesheet" href="static/css/pagination.css">
 <script type="application/javascript" charset="UTF-8" src="static/jquery/jquery.pagination.js"></script>
 <script type="application/javascript" charset="UTF-8" src="static/crowd/my-role.js"></script>
@@ -23,10 +23,10 @@
 	});
 </script>
 <body>
-<%@include file="include-nav.jsp" %>
+<%@include file="../include/include-nav.jsp" %>
 <div class="container-fluid">
 	<div class="row">
-		<%@ include file="/WEB-INF/include-sidebar.jsp" %>
+		<%@ include file="/WEB-INF/include/include-sidebar.jsp" %>
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<div class="panel panel-default">
 				<div class="panel-heading">
