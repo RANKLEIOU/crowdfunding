@@ -66,6 +66,10 @@
   <sql id="Base_Column_List">
     id, role_name
   </sql>
+  <select id="getRoleByKeyword" resultMap="BaseResultMap">
+    select id, role_name from t_role where role_name like concat('%',#{keyword},'%')
+  </select>
+
   <select id="selectByExample" parameterType="com.ajv.crowd.entity.RoleExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -81,7 +85,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_role
     where id = #{id,jdbcType=INTEGER}
