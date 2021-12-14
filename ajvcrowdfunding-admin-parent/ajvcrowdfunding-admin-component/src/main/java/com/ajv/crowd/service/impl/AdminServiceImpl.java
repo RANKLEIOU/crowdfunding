@@ -35,16 +35,16 @@ public class AdminServiceImpl implements AdminService {
 		List<Admin> admins = adminMapper.selectByExample(example);
 
 		// 如果信息为空则抛出异常
-		if (admins == null && admins.size() == 0){
+		if (admins == null && admins.size() == 0) {
 			throw new RuntimeException(CrowdConstant.MESSAGE_LOGIN_FAILED);
 		}
-		if (admins.size() > 1){
+		if (admins.size() > 1) {
 			throw new RuntimeException(CrowdConstant.MESSAGE_SYSTEM_ERROR_LOGIN_NOT_UNIQUE);
 		}
 
 		//拿到查询的信息
 		Admin admin = admins.get(0);
-		if (admin == null){
+		if (admin == null) {
 			throw new RuntimeException(CrowdConstant.MESSAGE_LOGIN_FAILED);
 		}
 
@@ -53,7 +53,7 @@ public class AdminServiceImpl implements AdminService {
 		//将用户输入的密码进行MD5加密
 		String userPswdFrom = CrowdUtil.md5(userPswd);
 		//二者对比，不相同则抛出异常，相同就返回对象
-		if (!Objects.equals(userPswdDB,userPswdFrom)){
+		if (!Objects.equals(userPswdDB, userPswdFrom)) {
 			throw new RuntimeException(CrowdConstant.MESSAGE_LOGIN_FAILED);
 		}
 		return admin;
@@ -62,7 +62,7 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public PageInfo<Admin> selectAdminBykeyword(String keyword, Integer pageNum, Integer pageSize) {
 		// 调用pageHelper静态方法开启分页
-		PageHelper.startPage(pageNum,pageSize);
+		PageHelper.startPage(pageNum, pageSize);
 		// 执行查询获取数据
 		List<Admin> admins = adminMapper.selectAdminBykeyword(keyword);
 		// 将获取的数据封装到pageInfo中
@@ -81,20 +81,20 @@ public class AdminServiceImpl implements AdminService {
 		// 设置为创建时间
 		admin.setCreateTime(createTime);
 
-		//对密码进行加密
+		// 对密码进行加密
 		String source = admin.getUserPswd();
 		String userPswd = CrowdUtil.md5(source);
 		admin.setUserPswd(userPswd);
-		//执行添加操作
+		// 执行添加操作
 		try {
 			adminMapper.insert(admin);
-		}catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
-			//判断异常对象是否是DuplicateKeyException，判断正确则表示账号重复，抛出自定义异常
-			if (e instanceof DuplicateKeyException){
+			// 判断异常对象是否是DuplicateKeyException，判断正确则表示账号重复，抛出自定义异常
+			if (e instanceof DuplicateKeyException) {
 				throw new LoginAcctAlreadyInUseException(CrowdConstant.MESSAGE_LOGIN_ACCT_ALREADY_IN_USE);
 			}
-			//如果不是DuplicateKeyException异常，则把异常对象再次抛出
+			// 如果不是DuplicateKeyException异常，则把异常对象再次抛出
 			throw e;
 		}
 	}
@@ -104,22 +104,22 @@ public class AdminServiceImpl implements AdminService {
 		adminMapper.deleteByPrimaryKey(id);
 	}
 
-	//通过id查找个人信息显示在修改界面
+	// 通过id查找个人信息显示在修改界面
 	@Override
 	public Admin findById(Integer id) {
 		return adminMapper.selectByPrimaryKey(id);
 	}
 
-	//修改方法
+	// 修改方法
 	@Override
 	public void updateAdmin(Admin admin) {
 		try {
-			//动态的修改，不会修改传入值为空的字段
+			// 动态的修改，不会修改传入值为空的字段
 			adminMapper.updateByPrimaryKeySelective(admin);
-		}catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
-			//如果修改的账号在数据库中有了则抛出异常
-			if (e instanceof DuplicateKeyException){
+			// 如果修改的账号在数据库中有了则抛出异常
+			if (e instanceof DuplicateKeyException) {
 				throw new LoginAcctAlreadyInUseException(CrowdConstant.MESSAGE_LOGIN_ACCT_ALREADY_IN_USE);
 			}
 		}
