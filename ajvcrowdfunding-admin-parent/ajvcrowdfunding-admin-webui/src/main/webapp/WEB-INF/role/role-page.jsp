@@ -84,5 +84,6 @@
 </div>
 </div>
 <%@include file="/WEB-INF/modal/modal-role-add.jsp" %>
+<%@include file="/WEB-INF/modal/modal-role-edit.jsp"%>
 </body>
 </html>
