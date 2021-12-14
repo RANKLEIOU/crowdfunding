@@ -86,8 +86,8 @@ function fillRoleTable(pageInfo) {
 		var checkbox = "<td><input type='checkbox' value= " + roleId + " ></td>"
 
 		var checkBtn = "<button type='button' class='btn btn-success btn-xs'><i class= 'glyphicon glyphicon-check'></i></button>"
-		var editBtn = "<button type='button' class='btn btn-primary btn-xs'><i class= 'glyphicon glyphicon-pencil'></i></button>"
-		var delBtn = "<button type='button' class='btn btn-danger btn-xs'><i class= 'glyphicon glyphicon-remove'></i></button>"
+		var editBtn = "<button type='button' id='"+roleId+"' class='btn btn-primary btn-xs editBtn'><i class= 'glyphicon glyphicon-pencil'></i></button>"
+		var delBtn = "<button type='button' class='btn btn-danger btn-xs delBtn'><i class= 'glyphicon glyphicon-remove'></i></button>"
 
 		var btn = "<td>" + checkBtn + " " + editBtn + " " + delBtn
 
@@ -175,7 +175,7 @@ $(function () {
 
 				if (result == 'SUCCESS') {
 
-					layer.msg("添加成功")
+					layer.msg("添加成功！")
 
 					// 将页码跳转到最后一页
 					window.pageNum = 999999
@@ -199,6 +199,58 @@ $(function () {
 
 		// 清除模态框的信息
 		$("#addModal[name=roleName]").val()
-	});
+	})
+
+	// 修改按钮单击事件
+	$("#rolePageBody").on('click','.editBtn',function (){
+
+		// 打开修改模态框
+		$("#editModal").modal('show')
+
+		// 获取roleId
+		window.roleId = this.id
+
+		// 获取roleName
+		var roleName = $(this).parent().prev().text()
+
+		// 设置模态框中的文本值
+		$("#editModal [name=roleName]").val(roleName)
+	})
+
+	// 保存修改
+	$("#editRoleBtn").click(function (){
+
+		// 获取修改模态框中的角色名称
+		var roleName = $("#editModal [name=roleName]").val()
+
+		$.ajax({
+			url:'role/edit',
+			type:'POST',
+			data:{
+				id:window.roleId,
+				roleName:roleName
+			},
+			dataType:'json',
+			success:function (res){
+				var result = res.result
+
+				if (result == 'SUCCESS'){
+					layer.msg("修改成功！")
+
+					// 重新加载分页数据
+					generatePage()
+
+				}else if (result == 'FAILED'){
+					layer.msg("修改失败！")
+				}
+			},
+			error:function (res){
+				layer.msg(res.status+" "+res.statusText)
+			}
+		})
+
+		// 关闭模态框
+		$("#editModal").modal('hide')
+	})
 })
 
