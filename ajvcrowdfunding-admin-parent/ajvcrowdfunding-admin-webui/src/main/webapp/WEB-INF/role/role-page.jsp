@@ -50,7 +50,7 @@
 					<button type="button" class="btn btn-danger" style="float:right;margin-left:10px;"><i
 							class=" glyphicon glyphicon-remove"></i> 删除
 					</button>
-					<button type="button" id="addModelBtn" class="btn btn-primary" style="float:right;"><i
+					<button type="button" id="addModalBtn" class="btn btn-primary" style="float:right;"><i
 							class="glyphicon glyphicon-plus"></i> 新增
 					</button>
 					<br>
@@ -83,6 +83,6 @@
 	</div>
 </div>
 </div>
-<%@include file="/WEB-INF/model/model-role-add.jsp" %>
+<%@include file="/WEB-INF/modal/modal-role-add.jsp" %>
 </body>
 </html>
