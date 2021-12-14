@@ -1,6 +1,7 @@
 package com.ajv.crowd.service.impl;
 
 import com.ajv.crowd.entity.Role;
+import com.ajv.crowd.entity.RoleExample;
 import com.ajv.crowd.mapper.RoleMapper;
 import com.ajv.crowd.service.api.RoleService;
 import com.github.pagehelper.PageHelper;
@@ -32,9 +33,17 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public void updateRoleById(Role role) {
-
+	public void updateRole(Role role) {
 		roleMapper.updateByPrimaryKey(role);
+	}
 
+	@Override
+	public void removeRole(List<Integer> roleIdList) {
+
+		RoleExample example = new RoleExample();
+		RoleExample.Criteria criteria = example.createCriteria();
+		criteria.andIdIn(roleIdList);
+
+		roleMapper.deleteByExample(example);
 	}
 }

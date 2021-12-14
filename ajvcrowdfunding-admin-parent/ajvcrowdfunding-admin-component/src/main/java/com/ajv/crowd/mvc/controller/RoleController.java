@@ -7,9 +7,12 @@ import com.ajv.crowd.util.ResultEntity;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class RoleController {
@@ -39,7 +42,15 @@ public class RoleController {
 	@RequestMapping("/role/edit")
 	public ResultEntity<String> editRole(Role role){
 
-		roleService.updateRoleById(role);
+		roleService.updateRole(role);
+
+		return ResultEntity.success();
+	}
+
+	@RequestMapping("/role/remove")
+	public ResultEntity<String> removeRole(@RequestBody List<Integer> roleIdList){
+
+		roleService.removeRole(roleIdList);
 
 		return ResultEntity.success();
 	}
