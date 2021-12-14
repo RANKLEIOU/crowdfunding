@@ -18,11 +18,16 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public PageInfo<Role> getRoleByKeyword(String keyword,Integer pageNum,Integer pageSize) {
-		//开启分页
+		// 开启分页
 		PageHelper.startPage(pageNum,pageSize);
-		//将信息封装到分页插件中
+		// 将信息封装到分页插件中
 		List<Role> roles = roleMapper.getRoleByKeyword(keyword);
 
 		return new PageInfo<>(roles);
+	}
+
+	@Override
+	public void saveRole(Role role) {
+		roleMapper.insert(role);
 	}
 }
