@@ -13,14 +13,16 @@
 <script type="application/javascript" charset="UTF-8" src="static/crowd/my-role.js"></script>
 <script type="application/javascript">
 	$(function () {
-		//设置全局分页数值
+		// 设置全局分页数值
 		window.pageNum = "1";
 		window.pageSize = "5";
 		window.keyword = "";
 
-		//调用my-role.js中的分页方法
+		// 调用my-role.js中的分页方法
 		generatePage();
 	});
+
+
 </script>
 <body>
 <%@include file="../include/include-nav.jsp" %>
@@ -37,17 +39,19 @@
 						<div class="form-group has-feedback">
 							<div class="input-group">
 								<div class="input-group-addon">查询条件</div>
-								<input class="form-control has-success" type="text" placeholder="请输入查询条件">
+								<input id="roleSearchInput" class="form-control has-success" type="text"
+									   placeholder="请输入查询条件">
 							</div>
 						</div>
-						<button type="button" class="btn btn-warning"><i class="glyphicon glyphicon-search"></i> 查询
+						<button type="button" id="roleSearchBtn" class="btn btn-warning"><i
+								class="glyphicon glyphicon-search"></i> 查询
 						</button>
 					</form>
 					<button type="button" class="btn btn-danger" style="float:right;margin-left:10px;"><i
 							class=" glyphicon glyphicon-remove"></i> 删除
 					</button>
-					<button type="button" class="btn btn-primary" style="float:right;"
-							onclick="window.location.href='form.html'"><i class="glyphicon glyphicon-plus"></i> 新增
+					<button type="button" id="addModelBtn" class="btn btn-primary" style="float:right;"><i
+							class="glyphicon glyphicon-plus"></i> 新增
 					</button>
 					<br>
 					<hr style="clear:both;">
@@ -62,19 +66,6 @@
 							</tr>
 							</thead>
 							<tbody id="rolePageBody">
-							<tr>
-								<td>1</td>
-								<td><input type="checkbox"></td>
-								<td>PM - 项目经理</td>
-								<td>
-									<button type="button" class="btn btn-success btn-xs"><i
-											class=" glyphicon glyphicon-check"></i></button>
-									<button type="button" class="btn btn-primary btn-xs"><i
-											class=" glyphicon glyphicon-pencil"></i></button>
-									<button type="button" class="btn btn-danger btn-xs"><i
-											class=" glyphicon glyphicon-remove"></i></button>
-								</td>
-							</tr>
 							</tbody>
 							<tfoot>
 							<tr>
@@ -92,5 +83,6 @@
 	</div>
 </div>
 </div>
+<%@include file="/WEB-INF/model/model-role-add.jsp" %>
 </body>
 </html>
