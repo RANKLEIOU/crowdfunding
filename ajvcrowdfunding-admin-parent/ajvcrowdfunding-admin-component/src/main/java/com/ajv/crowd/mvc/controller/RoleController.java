@@ -35,4 +35,12 @@ public class RoleController {
 
 		return ResultEntity.success();
 	}
+
+	@RequestMapping("/role/edit")
+	public ResultEntity<String> editRole(Role role){
+
+		roleService.updateRoleById(role);
+
+		return ResultEntity.success();
+	}
 }
