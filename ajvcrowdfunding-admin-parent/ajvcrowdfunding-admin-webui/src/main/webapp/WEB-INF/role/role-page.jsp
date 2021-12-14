@@ -47,7 +47,7 @@
 								class="glyphicon glyphicon-search"></i> 查询
 						</button>
 					</form>
-					<button type="button" class="btn btn-danger" style="float:right;margin-left:10px;"><i
+					<button type="button" id="removeBtn" class="btn btn-danger" style="float:right;margin-left:10px;"><i
 							class=" glyphicon glyphicon-remove"></i> 删除
 					</button>
 					<button type="button" id="addModalBtn" class="btn btn-primary" style="float:right;"><i
@@ -85,5 +85,6 @@
 </div>
 <%@include file="/WEB-INF/modal/modal-role-add.jsp" %>
 <%@include file="/WEB-INF/modal/modal-role-edit.jsp"%>
+<%@include file="/WEB-INF/modal/modal-role-remove.jsp"%>
 </body>
 </html>
