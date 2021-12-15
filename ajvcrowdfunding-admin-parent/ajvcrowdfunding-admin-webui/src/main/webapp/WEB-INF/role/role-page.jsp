@@ -47,7 +47,7 @@
 								class="glyphicon glyphicon-search"></i> 查询
 						</button>
 					</form>
-					<button type="button" id="removeBtn" class="btn btn-danger" style="float:right;margin-left:10px;"><i
+					<button type="button" id="batchRemoveBtn" class="btn btn-danger" style="float:right;margin-left:10px;"><i
 							class=" glyphicon glyphicon-remove"></i> 删除
 					</button>
 					<button type="button" id="addModalBtn" class="btn btn-primary" style="float:right;"><i
@@ -60,7 +60,7 @@
 							<thead>
 							<tr>
 								<th width="30">#</th>
-								<th width="30"><input type="checkbox"></th>
+								<th width="30"><input id="checkAll" type="checkbox"></th>
 								<th>名称</th>
 								<th width="100">操作</th>
 							</tr>

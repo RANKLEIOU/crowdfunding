@@ -83,11 +83,11 @@ function fillRoleTable(pageInfo) {
 		var name = "<td>" + roleName + "</td>"
 
 		// checkbox
-		var checkbox = "<td><input type='checkbox' value= " + roleId + " ></td>"
+		var checkbox = "<td><input type='checkbox' id= " + roleId + " class='checkItem' ></td>"
 
 		var checkBtn = "<button type='button' class='btn btn-success btn-xs'><i class= 'glyphicon glyphicon-check'></i></button>"
-		var editBtn = "<button type='button' id='"+roleId+"' class='btn btn-primary btn-xs editBtn'><i class= 'glyphicon glyphicon-pencil'></i></button>"
-		var delBtn = "<button type='button' class='btn btn-danger btn-xs delBtn'><i class= 'glyphicon glyphicon-remove'></i></button>"
+		var editBtn = "<button type='button' id='" + roleId + "' class='btn btn-primary btn-xs editBtn'><i class= 'glyphicon glyphicon-pencil'></i></button>"
+		var delBtn = "<button type='button' id='" + roleId + "' class='btn btn-danger btn-xs removeBtn'><i class= 'glyphicon glyphicon-remove'></i></button>"
 
 		var btn = "<td>" + checkBtn + " " + editBtn + " " + delBtn
 
@@ -147,6 +147,9 @@ $(function () {
 	// 显示添加角色模态框
 	$("#addModalBtn").click(function () {
 		$("#addModal").modal("show")
+
+		//清空数据
+		$("#roleName").val("")
 	});
 
 	// 添加角色信息
@@ -156,9 +159,6 @@ $(function () {
 		// 空格表示在后代元素中继续查找
 		// [name=roleName]表示匹配 name 属性等于 roleName 的元素
 		var roleName = $("#addModal [name=roleName]").val();
-		console.log($("#addModal [name=roleName]"))
-		console.log($("#addModal [name=roleName]").val())
-		console.log(roleName)
 
 		// 发送Ajax请求
 		$.ajax({
@@ -202,7 +202,7 @@ $(function () {
 	})
 
 	// 修改按钮单击事件
-	$("#rolePageBody").on('click','.editBtn',function (){
+	$("#rolePageBody").on('click', '.editBtn', function () {
 
 		// 打开修改模态框
 		$("#editModal").modal('show')
@@ -218,39 +218,160 @@ $(function () {
 	})
 
 	// 保存修改
-	$("#editRoleBtn").click(function (){
+	$("#editRoleBtn").click(function () {
 
 		// 获取修改模态框中的角色名称
 		var roleName = $("#editModal [name=roleName]").val()
 
 		$.ajax({
-			url:'role/edit',
-			type:'POST',
-			data:{
-				id:window.roleId,
-				roleName:roleName
+			url: 'role/edit',
+			type: 'POST',
+			data: {
+				id: window.roleId,
+				roleName: roleName
 			},
-			dataType:'json',
-			success:function (res){
+			dataType: 'json',
+			success: function (res) {
 				var result = res.result
 
-				if (result == 'SUCCESS'){
+				if (result == 'SUCCESS') {
 					layer.msg("修改成功！")
 
 					// 重新加载分页数据
 					generatePage()
 
-				}else if (result == 'FAILED'){
-					layer.msg("修改失败！")
+				} else if (result == 'FAILED') {
+					layer.msg("修改失败！" + res.message)
 				}
 			},
-			error:function (res){
-				layer.msg(res.status+" "+res.statusText)
+			error: function (res) {
+				layer.msg(res.status + " " + res.statusText)
 			}
 		})
 
 		// 关闭模态框
 		$("#editModal").modal('hide')
+	})
+
+	//删除事件函数
+	$("#removeRoleBtn").click(function () {
+
+		// 将数组转成json形式传递给后端
+		var responseBody = JSON.stringify(window.roleIdArray)
+
+		$.ajax({
+			url: 'role/remove',
+			type: 'POST',
+			data: responseBody,
+			dataType: 'json',
+			contentType: 'application/json;charset=UTF-8',
+			success: function (res) {
+				var result = res.result
+
+				if (result == 'SUCCESS') {
+					layer.msg("删除成功！")
+
+					// 重新加载分页数据
+					generatePage()
+
+				} else if (result == 'FAILED') {
+					layer.msg("删除失败！" + res.message)
+				}
+			},
+			error: function (res) {
+				layer.msg(res.status + " " + res.statusText)
+			}
+		})
+
+		// 关闭模态框
+		$("#removeModal").modal('hide')
+	})
+
+
+	// 单个删除
+	$("#rolePageBody").on('click', '.removeBtn', function () {
+
+		// 清空提示框中的数据
+		$("#roleNameDiv").empty()
+
+		// 声明一个空数组用于存放id
+		var roleIdArray = []
+
+		// 获取当前所点击的数据id
+		var roleId = this.id
+		// 获取当前要删除的角色名称
+		var roleName = $(this).parent().prev().text();
+
+		// 将id存放在数组中
+		roleIdArray.push(roleId)
+
+		//将数组存放在全局
+		window.roleIdArray = roleIdArray
+
+		// 将需要删除的用户展示到删除提示框中
+		$("#roleNameDiv").append(roleName)
+
+		// 触发删除提示
+		$("#removeModal").modal('show')
+
+	})
+
+	// 全选按钮功能
+	$("#checkAll").click(function () {
+
+		// 获取全选按钮的状态
+		var checkStatus = this.checked
+
+		// 将全选框状态追加到其他选框
+		$(".checkItem").prop("checked", checkStatus)
+	})
+
+	// 全选
+	$("#rolePageBody").on('click', '.checkItem', function () {
+
+		// 获取选中的数量
+		var checkCount = $(".checkItem:checked").length
+
+		// 获取全部选框的数量
+		var checkNum = $(".checkItem").length
+
+		// 如果选中全部选框则标记全选框
+		$("#checkAll").prop("checked", checkCount == checkNum)
+	})
+
+
+	// 批量删除
+	$("#batchRemoveBtn").click(function () {
+
+		// 清空提示框中的数据
+		$("#roleNameDiv").empty()
+
+		// 声明一个数组存放id
+		var roleIdArray = []
+
+		// 获取所有被选中的角色id并显示name
+		$(".checkItem:checked").each(function () {
+
+			var roleId = this.id
+			var roleName = $(this).parent().next().text()
+
+			// 将id存入数组
+			roleIdArray.push(roleId)
+			// 将name显示在提示框
+			$("#roleNameDiv").append(roleName + "</br>")
+		})
+
+		// 判断是否选中了要删除的角色
+		if (roleIdArray.length == 0) {
+			layer.msg("请至少选中一条要删除的信息！")
+			return;
+		}
+
+		// 将id数组存放进全局变量
+		window.roleIdArray = roleIdArray
+
+		// 触发删除提示框
+		$("#removeModal").modal('show')
 	})
 })
 
