@@ -30,6 +30,7 @@
 	<mvc:view-controller path="/admin/to/main/toMain" view-name="admin/admin-main"/>
 	<mvc:view-controller path="/admin/to/add/page" view-name="admin/admin-add"/>
 	<mvc:view-controller path="/role/to/page" view-name="role/role-page"/>
+	<mvc:view-controller path="/menu/to/page" view-name="menu/menu-page"/>
 
 	<!--配置基于XML的异常映射-->
 	<bean id="simpleMappingExceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
