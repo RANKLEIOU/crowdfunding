@@ -23,6 +23,6 @@ public class Menu {
 
     private List<Menu> children = new ArrayList<>();
 
-    private boolean open;
+    private boolean open = true;
 
 }
