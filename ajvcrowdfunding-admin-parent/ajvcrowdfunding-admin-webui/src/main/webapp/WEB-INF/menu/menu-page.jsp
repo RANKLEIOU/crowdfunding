@@ -39,5 +39,6 @@
 </div>
 <%@include file="/WEB-INF/modal/modal-menu-add.jsp"%>
 <%@include file="/WEB-INF/modal/modal-menu-edit.jsp"%>
+<%@include file="/WEB-INF/modal/modal-menu-remove.jsp"%>
 </body>
 </html>
