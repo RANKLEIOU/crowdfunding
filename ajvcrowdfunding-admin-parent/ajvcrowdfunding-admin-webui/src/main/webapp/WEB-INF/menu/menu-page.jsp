@@ -37,5 +37,6 @@
 		</div>
 	</div>
 </div>
+<%@include file="/WEB-INF/modal/modal-menu-add.jsp"%>
 </body>
 </html>
