@@ -72,4 +72,10 @@ public class MenuController {
 		menuService.editMenu(menu);
 		return ResultEntity.success();
 	}
+
+	@RequestMapping("menu/remove")
+	public ResultEntity<String> removeMenu(Integer id){
+		menuService.removeMenu(id);
+		return ResultEntity.success();
+	}
 }
