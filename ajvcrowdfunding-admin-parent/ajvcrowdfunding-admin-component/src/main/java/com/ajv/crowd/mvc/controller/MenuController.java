@@ -4,6 +4,7 @@ import com.ajv.crowd.entity.Menu;
 import com.ajv.crowd.service.api.MenuService;
 import com.ajv.crowd.util.ResultEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -57,5 +58,12 @@ public class MenuController {
 		}
 
 		return ResultEntity.successWithData(root);
+	}
+
+	@RequestMapping("/menu/save")
+	public ResultEntity<String> saveMenu(@RequestBody Menu menu){
+		menuService.saveMenu(menu);
+
+		return ResultEntity.success();
 	}
 }
