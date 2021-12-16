@@ -60,9 +60,9 @@ function addHoverDom(treeId, treeNode) {
 	if ($("#" + btnGroupId).length > 0) return;
 
 	// 准备按钮组的HTML标签
-	var addBtn = "<a id='" + treeNode.id + "' class='btn btn-info dropdown-toggle btn-xs' style='margin-left:10px;padding-top:0px;' href='#' title='添加子节点'>&nbsp;&nbsp;<i class='fa fa-fw fa-plus rbg '></i></a>"
-	var removeBtn = "<a id='" + treeNode.id + "' class='btn btn-info dropdown-toggle btn-xs' style='margin-left:10px;padding-top:0px;' href='#' title=' 删 除 节 点 '>&nbsp;&nbsp;<i class='fa fa-fw fa-times rbg '></i></a>"
-	var editBtn = "<a id='" + treeNode.id + "' class='btn btn-info dropdown-toggle btn-xs' style='margin-left:10px;padding-top:0px;' href='#' title=' 修 改 节 点 '>&nbsp;&nbsp;<i class='fa fa-fw fa-edit rbg '></i></a>"
+	var addBtn = "<a id='" + treeNode.id + "' class='btn btn-info dropdown-toggle btn-xs addNodeBtn' style='margin-left:10px;padding-top:0px;' href='#' title='添加子节点'>&nbsp;&nbsp;<i class='fa fa-fw fa-plus rbg '></i></a>"
+	var removeBtn = "<a id='" + treeNode.id + "' class='btn btn-info dropdown-toggle btn-xs removeNodeBtn' style='margin-left:10px;padding-top:0px;' href='#' title=' 删 除 节 点 '>&nbsp;&nbsp;<i class='fa fa-fw fa-times rbg '></i></a>"
+	var editBtn = "<a id='" + treeNode.id + "' class='btn btn-info dropdown-toggle btn-xs editNodeBtn' style='margin-left:10px;padding-top:0px;' href='#' title=' 修 改 节 点 '>&nbsp;&nbsp;<i class='fa fa-fw fa-edit rbg '></i></a>"
 
 	// 获取当前节点的级别
 	var level = treeNode.level
@@ -104,3 +104,65 @@ function removeHoverDom(treeId, treeNode) {
 	// 移除对应元素
 	$("#" + btnGroupId).remove();
 };
+
+$(function (){
+
+	// 添加节点按钮事件
+	$("#treeDemo").on('click','.addNodeBtn',function () {
+
+		// 将当前节点的id作为新节点的pid
+		window.pid = this.id
+
+		// 打开模态框
+		$("#menuAddModal").modal('show')
+
+		// 这是超链接形式的按钮，所以要返回false阻止超链接默认提交行为
+		return false
+	})
+
+	// 添加节点事件
+	$("#menuSaveBtn").click(function (){
+
+		// 输入的节点名称
+		var name = $("#menuAddModal [name=name]").val()
+		// 输入的url地址
+		var url = $("#menuAddModal [name=url]").val()
+		// 选中的节点图标
+		var icon = $("#menuAddModal [name=icon]:checked").val()
+
+		// 发送Ajax保存节点
+		$.ajax({
+			url:'menu/save',
+			type: 'POST',
+			data:{
+				pid:window.pid,
+				name:name,
+				url:url,
+				icon:icon
+			},
+			dataType:'json',
+			success:function (res) {
+				var result = res.result
+
+				if (result == 'SUCCESS'){
+					layer.msg("添加成功！")
+
+					// 重新加载树形节点
+					// 这里是异步Ajax，所以需要在请求完成后再刷新页面，否则没有新增的数据
+					generateTree()
+				}else if (result == "FAILED"){
+					layer.msg("添加失败！"+res.message)
+				}
+			},
+			error:function (res) {
+				layer.msg(res.status+" "+res.statusText)
+			}
+		})
+
+		// 关闭模态框
+		$("#menuAddModal").modal('hide')
+
+		// 清空模态框,直接调用重置按钮即可
+		$("#menuResetBtn").click()
+	})
+})
