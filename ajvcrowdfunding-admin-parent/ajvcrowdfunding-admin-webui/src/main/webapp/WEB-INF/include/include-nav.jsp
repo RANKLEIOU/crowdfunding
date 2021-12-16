@@ -10,7 +10,7 @@
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<div>
-				<a class="navbar-brand" style="font-size: 32px;" href="#">众筹平台 -
+				<a class="navbar-brand" style="font-size: 32px;" href="admin/to/main/toMain">众筹平台 -
 					控制面板</a>
 			</div>
 		</div>
