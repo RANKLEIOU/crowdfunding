@@ -105,10 +105,10 @@ function removeHoverDom(treeId, treeNode) {
 	$("#" + btnGroupId).remove();
 };
 
-$(function (){
+$(function () {
 
 	// 添加节点按钮事件
-	$("#treeDemo").on('click','.addNodeBtn',function () {
+	$("#treeDemo").on('click', '.addNodeBtn', function () {
 
 		// 将当前节点的id作为新节点的pid
 		window.pid = this.id
@@ -121,8 +121,10 @@ $(function (){
 	})
 
 	// 添加节点事件
-	$("#menuSaveBtn").click(function (){
+	$("#menuSaveBtn").click(function () {
 
+		// 需要添加节点的父节点id
+		var pid = window.pid
 		// 输入的节点名称
 		var name = $("#menuAddModal [name=name]").val()
 		// 输入的url地址
@@ -132,30 +134,30 @@ $(function (){
 
 		// 发送Ajax保存节点
 		$.ajax({
-			url:'menu/save',
+			url: 'menu/save',
 			type: 'POST',
-			data:{
-				pid:window.pid,
-				name:name,
-				url:url,
-				icon:icon
+			data: {
+				pid: pid,
+				name: name,
+				url: url,
+				icon: icon
 			},
-			dataType:'json',
-			success:function (res) {
+			dataType: 'json',
+			success: function (res) {
 				var result = res.result
 
-				if (result == 'SUCCESS'){
+				if (result == 'SUCCESS') {
 					layer.msg("添加成功！")
 
 					// 重新加载树形节点
 					// 这里是异步Ajax，所以需要在请求完成后再刷新页面，否则没有新增的数据
 					generateTree()
-				}else if (result == "FAILED"){
-					layer.msg("添加失败！"+res.message)
+				} else if (result == "FAILED") {
+					layer.msg("添加失败！" + res.message)
 				}
 			},
-			error:function (res) {
-				layer.msg(res.status+" "+res.statusText)
+			error: function (res) {
+				layer.msg(res.status + " " + res.statusText)
 			}
 		})
 
@@ -164,5 +166,80 @@ $(function (){
 
 		// 清空模态框,直接调用重置按钮即可
 		$("#menuResetBtn").click()
+	})
+
+	$("#treeDemo").on('click', '.editNodeBtn', function () {
+
+		// 将id存入全局中
+		window.id = this.id
+
+		// 打开修改模态框
+		$("#menuEditModal").modal('show')
+
+		// 获取树形节点对象
+		var zTreeObject = $.fn.zTree.getZTreeObj("treeDemo")
+
+		// 通过id来查找节点对象，声明属性的键
+		var key = "id"
+
+		// 声明属性的值
+		var value = window.id
+
+		// 从树形节点中拿到当前节点对象
+		var currentNode = zTreeObject.getNodeByParam(key, value)
+
+		// 获取到当前节点对象的值后显示在修改模态框中
+		// 节点名称
+		$("#menuEditModal [name=name]").val(currentNode.name)
+		// 链接地址
+		$("#menuEditModal [name=url]").val(currentNode.url)
+		// 图标样式
+		$("#menuEditModal [name=icon]").val([currentNode.icon])
+
+		// 取消超链接默认行为
+		return false
+	})
+
+	$("#menuEditBtn").click(function () {
+
+		// 获取当前节点对象的id
+		var id = window.id
+		// 从模态框中获取节点名称
+		var name = $("#menuEditModal [name=name]").val()
+		// 获取链接地址
+		var url = $("#menuEditModal [name=url]").val()
+		// 获取图标样式
+		var icon = $("#menuEditModal [name=icon]:checked").val()
+
+		// 发送Ajax保存修改的数据
+		$.ajax({
+			url: 'menu/edit',
+			type: 'POST',
+			data: {
+				id: id,
+				name: name,
+				url: url,
+				icon: icon
+			},
+			dataType: 'json',
+			success: function (res) {
+				var result = res.result
+
+				if (result == "SUCCESS") {
+					layer.msg("修改成功！")
+
+					// 刷新树形节点
+					generateTree()
+				} else if (result == "FAILED") {
+					layer.msg("修改失败！" + res.message)
+				}
+			},
+			error: function (res) {
+				layer.msg(res.status + " " + res.statusText)
+			}
+		})
+
+		// 关闭模态框
+		$("#menuEditModal").modal("hide")
 	})
 })
