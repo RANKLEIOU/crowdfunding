@@ -168,6 +168,7 @@ $(function () {
 		$("#menuResetBtn").click()
 	})
 
+	// 节点修改按钮事件
 	$("#treeDemo").on('click', '.editNodeBtn', function () {
 
 		// 将id存入全局中
@@ -241,5 +242,62 @@ $(function () {
 
 		// 关闭模态框
 		$("#menuEditModal").modal("hide")
+	})
+
+	// 删除触发事件
+	$("#treeDemo").on('click', '.removeNodeBtn', function () {
+
+		// 打开模态框
+		$("#menuRemoveModal").modal("show")
+		// 获取当前节点id并存入全局
+		window.id = this.id
+
+		// 获取当前树形节点
+		var zTreeObj = $.fn.zTree.getZTreeObj("treeDemo")
+
+		// 用于查找当前节点的属性
+		var key = "id"
+		var value = window.id
+
+		// 通过id查找当前节点对象
+		var currentNode = zTreeObj.getNodeByParam(key, value)
+
+		// 设置模态框中的提示内容
+		$("#removeNodeSpan").html("【<i class=" + currentNode.icon + "></i>" + currentNode.name + "】")
+
+		// 取消超链接默认行为
+		return false
+	})
+
+	// 删除按钮点击事件
+	$("#removeMenuBtn").click(function (){
+
+		// 从全局中拿到要删除的节点id
+		var id = window.id
+
+		// 发送删除请求
+		$.ajax({
+			url:'menu/remove',
+			type:'POST',
+			data:{
+				id:id
+			},
+			success:function (res) {
+				var result = res.result
+
+				if (result == "SUCCESS"){
+					layer.msg("删除成功！")
+
+					generateTree()
+				}else if (result == "FAILED"){
+					layer.msg("删除失败！"+res.message)
+				}
+			},
+			error:function (res) {
+				layer.msg(res.status+" "+res.statusText)
+			}
+		})
+		// 关闭模态框
+		$("#menuRemoveModal").modal("hide")
 	})
 })
