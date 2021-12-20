@@ -9,6 +9,8 @@
 <html>
 <%@include file="../include/include-head.jsp" %>
 <link rel="stylesheet" href="static/css/pagination.css">
+<link rel="stylesheet" href="/static/ztree/zTreeStyle.css"/>
+<script type="application/javascript" charset="UTF-8" src="/static/ztree/jquery.ztree.all-3.5.min.js"></script>
 <script type="application/javascript" charset="UTF-8" src="static/jquery/jquery.pagination.js"></script>
 <script type="application/javascript" charset="UTF-8" src="static/crowd/my-role.js"></script>
 <script type="application/javascript">
@@ -86,5 +88,6 @@
 <%@include file="/WEB-INF/modal/modal-role-add.jsp" %>
 <%@include file="/WEB-INF/modal/modal-role-edit.jsp"%>
 <%@include file="/WEB-INF/modal/modal-role-remove.jsp"%>
+<%@include file="/WEB-INF/modal/modal-role-permission.jsp"%>
 </body>
 </html>
