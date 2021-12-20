@@ -9,8 +9,8 @@
 <html>
 <%@include file="../include/include-head.jsp" %>
 <link rel="stylesheet" href="static/css/pagination.css">
-<link rel="stylesheet" href="/static/ztree/zTreeStyle.css"/>
-<script type="application/javascript" charset="UTF-8" src="/static/ztree/jquery.ztree.all-3.5.min.js"></script>
+<link rel="stylesheet" href="static/ztree/zTreeStyle.css"/>
+<script type="application/javascript" charset="UTF-8" src="static/ztree/jquery.ztree.all-3.5.min.js"></script>
 <script type="application/javascript" charset="UTF-8" src="static/jquery/jquery.pagination.js"></script>
 <script type="application/javascript" charset="UTF-8" src="static/crowd/my-role.js"></script>
 <script type="application/javascript">
@@ -49,7 +49,8 @@
 								class="glyphicon glyphicon-search"></i> 查询
 						</button>
 					</form>
-					<button type="button" id="batchRemoveBtn" class="btn btn-danger" style="float:right;margin-left:10px;"><i
+					<button type="button" id="batchRemoveBtn" class="btn btn-danger"
+							style="float:right;margin-left:10px;"><i
 							class=" glyphicon glyphicon-remove"></i> 删除
 					</button>
 					<button type="button" id="addModalBtn" class="btn btn-primary" style="float:right;"><i
@@ -86,8 +87,8 @@
 </div>
 </div>
 <%@include file="/WEB-INF/modal/modal-role-add.jsp" %>
-<%@include file="/WEB-INF/modal/modal-role-edit.jsp"%>
-<%@include file="/WEB-INF/modal/modal-role-remove.jsp"%>
-<%@include file="/WEB-INF/modal/modal-role-permission.jsp"%>
+<%@include file="/WEB-INF/modal/modal-role-edit.jsp" %>
+<%@include file="/WEB-INF/modal/modal-role-remove.jsp" %>
+<%@include file="/WEB-INF/modal/modal-role-permission.jsp" %>
 </body>
 </html>
