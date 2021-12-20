@@ -69,6 +69,19 @@
   <select id="getRoleByKeyword" resultMap="BaseResultMap">
     select id, role_name from t_role where role_name like concat('%',#{keyword},'%')
   </select>
+  <select id="getAssignedRole" resultMap="BaseResultMap">
+    select id,role_name from t_role where id in (select role_id from t_admin_role where admin_id = #{adminId})
+  </select>
+  <select id="getUnAssignedRole" resultMap="BaseResultMap">
+    select id,role_name from t_role where id not in (select role_id from t_admin_role where admin_id = #{adminId})
+  </select>
+  <delete id="deleteOldAssignRole">
+    delete from t_admin_role where admin_id = #{adminId}
+  </delete>
+  <insert id="saveAssignRole">
+    insert into t_admin_role (admin_id,role_id) values
+    <foreach collection="roleIdList" item="roleId" separator=",">(#{adminId},#{roleId})</foreach>
+  </insert>
 
   <select id="selectByExample" parameterType="com.ajv.crowd.entity.RoleExample" resultMap="BaseResultMap">
     select
