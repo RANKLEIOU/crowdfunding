@@ -421,31 +421,31 @@ $(function () {
 
 		// 获取当前角色拥有的权限
 		var ajaxReturn = $.ajax({
-			url:"assign/get/authId",
-			type:"POST",
+			url: "assign/get/authId",
+			type: "POST",
 			async: false,
 			dataType: "json",
 			data: {
-				roleId:window.roleId
+				roleId: window.roleId
 			}
 		});
 
-		if (ajaxReturn.status != 200){
-			layer.msg("错误状态码："+ajaxReturn.status+" "+ajaxReturn.statusText);
+		if (ajaxReturn.status != 200) {
+			layer.msg("错误状态码：" + ajaxReturn.status + " " + ajaxReturn.statusText);
 			return;
 		}
 
 		var authIdList = ajaxReturn.responseJSON.data;
 
 		// 将当前角色拥有的权限节点选中
-		for (var i = 0;i <= authIdList.length;i++){
+		for (var i = 0; i <= authIdList.length; i++) {
 			var authId = authIdList[i];
 
-			var treeNode = zTreeObj.getNodeByParam("id",authId);
+			var treeNode = zTreeObj.getNodeByParam("id", authId);
 
 			var checked = true;
 			var checkTypeFlag = false;
-			zTreeObj.checkNode(treeNode,checked,checkTypeFlag);
+			zTreeObj.checkNode(treeNode, checked, checkTypeFlag);
 		}
 	}
 
@@ -463,7 +463,7 @@ $(function () {
 	})
 
 	// 确认授权按钮
-	$("#assignBtn").click(function (){
+	$("#assignBtn").click(function () {
 
 		// 创建数组用于接收选中的权限
 		var authIdArray = [];
@@ -474,7 +474,7 @@ $(function () {
 		// 获取被选中的树节点对象
 		var checkedNodes = zTreeObj.getCheckedNodes();
 
-		for (var i = 0;i < checkedNodes.length;i++){
+		for (var i = 0; i < checkedNodes.length; i++) {
 			// 当前节点对象
 			var checkedNode = checkedNodes[i];
 
@@ -487,28 +487,28 @@ $(function () {
 
 		// 将权限id数组和角色id放入
 		var requestBody = {
-			authIdArray : authIdArray,
-			roleId : [window.roleId]
+			authIdArray: authIdArray,
+			roleId: [window.roleId]
 		}
 
 		// 发送请求保存授权信息
 		$.ajax({
-			url:"assign/to/auth",
-			type:"POST",
-			data:JSON.stringify(requestBody),
-			dataType:"json",
+			url: "assign/to/auth",
+			type: "POST",
+			data: JSON.stringify(requestBody),
+			dataType: "json",
 			contentType: "application/json;charset=UTF-8",
-			success:function (res){
+			success: function (res) {
 				var result = res.result;
 
-				if (result == "SUCCESS"){
+				if (result == "SUCCESS") {
 					layer.msg("授权成功！");
-				}else if (result == "FAILED"){
+				} else if (result == "FAILED") {
 					layer.msg("授权失败！");
 				}
 			},
-			error:function (res){
-				layer.msg("错误状态码："+res.status+" "+res.statusText);
+			error: function (res) {
+				layer.msg("错误状态码：" + res.status + " " + res.statusText);
 			}
 		});
 

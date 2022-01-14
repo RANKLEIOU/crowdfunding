@@ -39,9 +39,9 @@ public class AuthServiceImpl implements AuthService {
 		List<Integer> authIds = map.get("authIdArray");
 
 		// 判断权限id数组是否可用
-		if (authIds != null && authIds.size() > 0){
+		if (authIds != null && authIds.size() > 0) {
 			// 保存新的角色权限
-			authMapper.saveAuth(authIds,roleId);
+			authMapper.saveAuth(authIds, roleId);
 		}
 	}
 }

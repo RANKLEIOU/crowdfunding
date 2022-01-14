@@ -7,31 +7,31 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface AuthMapper {
-    long countByExample(AuthExample example);
+	long countByExample(AuthExample example);
 
-    int deleteByExample(AuthExample example);
+	int deleteByExample(AuthExample example);
 
-    int deleteByPrimaryKey(Integer id);
+	int deleteByPrimaryKey(Integer id);
 
-    int insert(Auth record);
+	int insert(Auth record);
 
-    int insertSelective(Auth record);
+	int insertSelective(Auth record);
 
-    List<Auth> selectByExample(AuthExample example);
+	List<Auth> selectByExample(AuthExample example);
 
-    Auth selectByPrimaryKey(Integer id);
+	Auth selectByPrimaryKey(Integer id);
 
-    int updateByExampleSelective(@Param("record") Auth record, @Param("example") AuthExample example);
+	int updateByExampleSelective(@Param("record") Auth record, @Param("example") AuthExample example);
 
-    int updateByExample(@Param("record") Auth record, @Param("example") AuthExample example);
+	int updateByExample(@Param("record") Auth record, @Param("example") AuthExample example);
 
-    int updateByPrimaryKeySelective(Auth record);
+	int updateByPrimaryKeySelective(Auth record);
 
-    int updateByPrimaryKey(Auth record);
+	int updateByPrimaryKey(Auth record);
 
-    List<Integer> selectAuthIdByRoleId(Integer roleId);
+	List<Integer> selectAuthIdByRoleId(Integer roleId);
 
-    void deleteOldAuth(Integer roleId);
+	void deleteOldAuth(Integer roleId);
 
-    void saveAuth(@Param("authIds") List<Integer> authIds,@Param("roleId") Integer roleId);
+	void saveAuth(@Param("authIds") List<Integer> authIds, @Param("roleId") Integer roleId);
 }
