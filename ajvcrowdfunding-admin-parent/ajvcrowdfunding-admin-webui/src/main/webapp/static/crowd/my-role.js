@@ -85,7 +85,7 @@ function fillRoleTable(pageInfo) {
 		// checkbox
 		var checkbox = "<td><input type='checkbox' id= " + roleId + " class='checkItem' ></td>"
 
-		var checkBtn = "<button type='button' class='btn btn-success btn-xs'><i class= 'glyphicon glyphicon-check'></i></button>"
+		var checkBtn = "<button type='button' id='" + roleId + "' class='btn btn-success btn-xs checkBtn'><i class= 'glyphicon glyphicon-check'></i></button>"
 		var editBtn = "<button type='button' id='" + roleId + "' class='btn btn-primary btn-xs editBtn'><i class= 'glyphicon glyphicon-pencil'></i></button>"
 		var delBtn = "<button type='button' id='" + roleId + "' class='btn btn-danger btn-xs removeBtn'><i class= 'glyphicon glyphicon-remove'></i></button>"
 
@@ -372,6 +372,147 @@ $(function () {
 
 		// 触发删除提示框
 		$("#removeModal").modal('show')
+	})
+
+	// 权限树形节点
+	function fillAuthTree() {
+
+		// 发送Ajax请求获取权限数据
+		var ajaxResult = $.ajax({
+			url: 'assign/get/auth',
+			type: 'POST',
+			dataType: 'json',
+			async: false,
+		})
+
+		if (ajaxResult.status != 200) {
+			layer.msg("错误状态码：" + ajaxResult.status + " " + ajaxResult.statusText);
+			return;
+		}
+		// 获取权限信息
+		var authList = ajaxResult.responseJSON.data;
+
+		// 设置树节点属性
+		var setting = {
+			data: {
+				simpleData: {
+					// 开启简易树节点
+					enable: true,
+					// 将对应的pid属性修改为权限表中的关系属性id
+					pIdKey: "categoryId",
+				},
+				key: {
+					// 设置节点名称为权限名称
+					name: "authTitle"
+				}
+			},
+			check: {
+				enable: true
+			}
+		}
+
+		// 初始化树节点
+		$.fn.zTree.init($("#authTreeDemo"), setting, authList);
+
+		// 获取树节点对象
+		var zTreeObj = $.fn.zTree.getZTreeObj("authTreeDemo");
+		// 展开所有节点
+		zTreeObj.expandAll(true);
+
+		// 获取当前角色拥有的权限
+		var ajaxReturn = $.ajax({
+			url:"assign/get/authId",
+			type:"POST",
+			async: false,
+			dataType: "json",
+			data: {
+				roleId:window.roleId
+			}
+		});
+
+		if (ajaxReturn.status != 200){
+			layer.msg("错误状态码："+ajaxReturn.status+" "+ajaxReturn.statusText);
+			return;
+		}
+
+		var authIdList = ajaxReturn.responseJSON.data;
+
+		// 将当前角色拥有的权限节点选中
+		for (var i = 0;i <= authIdList.length;i++){
+			var authId = authIdList[i];
+
+			var treeNode = zTreeObj.getNodeByParam("id",authId);
+
+			var checked = true;
+			var checkTypeFlag = false;
+			zTreeObj.checkNode(treeNode,checked,checkTypeFlag);
+		}
+	}
+
+	// 授权按钮单击事件
+	$("#rolePageBody").on('click', '.checkBtn', function () {
+
+		// 将当前角色id存入全局
+		window.roleId = this.id;
+
+		// 打开授权模态框
+		$("#assignModal").modal('show');
+
+		// 调用树形结构函数
+		fillAuthTree();
+	})
+
+	// 确认授权按钮
+	$("#assignBtn").click(function (){
+
+		// 创建数组用于接收选中的权限
+		var authIdArray = [];
+
+		// 获取zTreeObj对象
+		var zTreeObj = $.fn.zTree.getZTreeObj("authTreeDemo");
+
+		// 获取被选中的树节点对象
+		var checkedNodes = zTreeObj.getCheckedNodes();
+
+		for (var i = 0;i < checkedNodes.length;i++){
+			// 当前节点对象
+			var checkedNode = checkedNodes[i];
+
+			// 当前节点id
+			var nodeId = checkedNode.id
+
+			// 将选中的所有节点id放入数组
+			authIdArray.push(nodeId);
+		}
+
+		// 将权限id数组和角色id放入
+		var requestBody = {
+			authIdArray : authIdArray,
+			roleId : [window.roleId]
+		}
+
+		// 发送请求保存授权信息
+		$.ajax({
+			url:"assign/to/auth",
+			type:"POST",
+			data:JSON.stringify(requestBody),
+			dataType:"json",
+			contentType: "application/json;charset=UTF-8",
+			success:function (res){
+				var result = res.result;
+
+				if (result == "SUCCESS"){
+					layer.msg("授权成功！");
+				}else if (result == "FAILED"){
+					layer.msg("授权失败！");
+				}
+			},
+			error:function (res){
+				layer.msg("错误状态码："+res.status+" "+res.statusText);
+			}
+		});
+
+		$("#assignModal").modal("hide");
 	})
 })
 

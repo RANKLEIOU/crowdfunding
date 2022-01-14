@@ -68,6 +68,17 @@
   <sql id="Base_Column_List">
     id, auth_name, auth_title, category_id
   </sql>
+  <select id="selectAuthIdByRoleId" resultType="int">
+    select auth_id from t_role_auth where role_id = #{roleId}
+  </select>
+  <delete id="deleteOldAuth">
+    delete from t_role_auth where role_id = #{roleId}
+  </delete>
+  <insert id="saveAuth">
+    insert into t_role_auth(role_id,auth_id) values
+    <foreach collection="authIds" item="authId" separator=",">(#{roleId},#{authId})</foreach>
+  </insert>
+
   <select id="selectByExample" parameterType="com.ajv.crowd.entity.AuthExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -83,7 +94,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_auth
     where id = #{id,jdbcType=INTEGER}
@@ -99,9 +110,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.ajv.crowd.entity.Auth">
-    insert into t_auth (id, auth_name, auth_title, 
+    insert into t_auth (id, auth_name, auth_title,
       category_id)
-    values (#{id,jdbcType=INTEGER}, #{authName,jdbcType=VARCHAR}, #{authTitle,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{authName,jdbcType=VARCHAR}, #{authTitle,jdbcType=VARCHAR},
       #{categoryId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.ajv.crowd.entity.Auth">
