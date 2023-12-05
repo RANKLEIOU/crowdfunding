@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="static/ztree/zTreeStyle.css"/>
 <script type="application/javascript" charset="UTF-8" src="static/ztree/jquery.ztree.all-3.5.min.js"></script>
 <script type="application/javascript" charset="UTF-8" src="static/jquery/jquery.pagination.js"></script>
-<script type="application/javascript" charset="UTF-8" src="static/crowd/my-role.js"></script>
+<script type="text/javascript" charset="UTF-8" src="static/crowd/my-role.js"></script>
 <script type="application/javascript">
 	$(function () {
 		// 设置全局分页数值

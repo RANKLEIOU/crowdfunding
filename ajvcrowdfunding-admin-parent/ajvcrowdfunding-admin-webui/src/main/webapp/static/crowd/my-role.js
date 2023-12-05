@@ -112,8 +112,8 @@ function generateNavigate(pageInfo) {
 		num_display_entries: 5,            // 主体页数
 		items_per_page: pageInfo.pageSize,  // 每页显示的数据量
 		current_page: pageInfo.pageNum - 1,   // 当前页
-		prev_text: '上一页',
-		next_text: '下一页',
+		prev_text: "上一页",
+		next_text: "下一页",
 		callback: paginationCallBack,
 	}
 	$("#Pagination").pagination(total, properties)
